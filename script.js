@@ -29,24 +29,26 @@ function Hero(image, top, left, size, speed) {
   }
 }
 
-var hero = new Hero('doraemon.png', 20, 30, 200, 6);
+var hero = new Hero('doraemon.png', 20, 30, 200, 50);
 
-function start() {
-  let maxWidth = window.innerWidth - hero.size;
-  let maxHeight = window.innerHeight - hero.size;
-
-  if (hero.left < maxWidth && hero.top <= 20) {
-    hero.moveRight();
-  } else if (hero.left >= maxWidth && hero.top < maxHeight) {
-    hero.moveDown();
-  } else if (hero.top >= maxHeight && hero.left > 30) {
-    hero.moveLeft();
-  } else if (hero.left <= 30 && hero.top > 20) {
-    hero.moveUp();
-  }
-
+function render() {
   document.getElementById('game').innerHTML = hero.getHeroElement();
-  setTimeout(start, 20)
 }
-
-start();
+window.addEventListener('keydown', function (e) {
+  switch (e.key) {
+    case 'ArrowUp':
+      if (hero.top > 0) hero.moveUp();
+      break;
+    case 'ArrowDown':
+      if (hero.top < window.innerHeight - hero.size) hero.moveDown();
+      break;
+    case 'ArrowLeft':
+      if (hero.left > 0) hero.moveLeft();
+      break;
+    case 'ArrowRight':
+      if (hero.left < window.innerWidth - hero.size) hero.moveRight();
+      break;
+  }
+  render(); 
+});
+render();
